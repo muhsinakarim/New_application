@@ -1,14 +1,25 @@
 import { Injectable } from "@nestjs/common";
-import { Signup } from "./product.model";
+import { Product } from "./product.model";
+const fs=require('fs')
 @Injectable()
 export class ProductsService {
-   private products: Signup[] = [];
+   private products: Product[] = [];
 
-    insertProduct(userUsername:string,userPassword: string,userName: string){
-        const prodId = Math.random().toString();
-        const newProduct = new Signup(prodId,userUsername,userPassword,userName);
+    insertProduct(
+        productName:string, 
+        productDescription: string,
+        productPrice: number){
+        const prodId = this.products.length +1;
+        const getdate= new Date();
+        const date ={
+            month:getdate.toLocaleString("en-US",{month: "long"}),
+            day : getdate.toLocaleString("en-US", { day: "2-digit" }),
+            year : getdate.getFullYear()
+        }
+        const newProduct = new Product(prodId,productName,productDescription,productPrice);
         this.products.push(newProduct);
-        return newProduct;
+        fs.writeFileSync('src/products/data.json',JSON.stringify(this.products));
+        return {date,newProduct};
 
     }
 }

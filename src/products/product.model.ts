@@ -1,10 +1,10 @@
-export class Signup {
+export class Product {
    
     constructor(
-        public prodId: string,
-        public userUsername:string, 
-        public userPassword: string,
-        public userName: string
+        public prodId:number,
+        public productName:string, 
+        public productDescription: string,
+        public productPrice: number
         ) {
      
 
